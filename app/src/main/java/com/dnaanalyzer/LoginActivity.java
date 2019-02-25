@@ -138,6 +138,15 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
             }
         });
 
+        Button EmailRegisterInButton = (Button) findViewById(R.id.email_register_button);
+        EmailRegisterInButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                RegisterEmail();
+            }
+        });
+
+
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
     }
@@ -191,6 +200,82 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
+    private void RegisterEmail() {
+        if (mAuthTask != null) {
+            return;
+        }
+
+        // Reset errors.
+        mEmailView.setError(null);
+        mPasswordView.setError(null);
+
+        // Store values at the time of the login attempt.
+        String email = mEmailView.getText().toString();
+        String password = mPasswordView.getText().toString();
+
+        boolean cancel = false;
+        View focusView = null;
+
+        // Check for a valid password, if the user entered one.
+        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+            mPasswordView.setError(getString(R.string.error_invalid_password));
+            focusView = mPasswordView;
+            cancel = true;
+        }
+
+        // Check for a valid email address.
+        if (TextUtils.isEmpty(email)) {
+            mEmailView.setError(getString(R.string.error_field_required));
+            focusView = mEmailView;
+            cancel = true;
+        } else if (!isEmailValid(email)) {
+            mEmailView.setError(getString(R.string.error_invalid_email));
+            focusView = mEmailView;
+            cancel = true;
+        }
+
+        if (cancel) {
+            // There was an error; don't attempt login and focus the first
+            // form field with an error.
+            focusView.requestFocus();
+        } else {
+            // Show a progress spinner, and kick off a background task to
+            // perform the user login attempt.
+            showProgress(true);
+
+            mAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Log.d("DnaAnalyzer", "createUserWithEmail:success");
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                //updateUI(user);
+                                Intent intent = new Intent(LoginActivity.this, UploadActivity.class);
+                                startActivity(intent);
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Log.w("DnaAnalyzer", "createUserWithEmail:failure", task.getException());
+                                Toast.makeText(LoginActivity.this, "Registration failed.",
+                                        Toast.LENGTH_SHORT).show();
+                                //updateUI(null);
+                            }
+
+
+                        }
+                    });
+
+            showProgress(false);
+
+
+            //mAuthTask = new UserLoginTask(email, password);
+            //mAuthTask.execute((Void) null);
+
+        }
+
+    }
+
     private void attemptLogin() {
         if (mAuthTask != null) {
             return;
@@ -232,33 +317,42 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
+            showProgress(true);
 
-            mAuth.createUserWithEmailAndPassword(email, password)
+            mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
-                                Log.d("DnaAnalyzer", "createUserWithEmail:success");
+                                Log.d("DnaAnalyzer", "signInWithEmail:success");
                                 FirebaseUser user = mAuth.getCurrentUser();
-                                //updateUI(user);
+                                Intent intent = new Intent(LoginActivity.this, UploadActivity.class);
+                                startActivity(intent);
+
                             } else {
                                 // If sign in fails, display a message to the user.
-                                Log.w("DnaAnalyzer", "createUserWithEmail:failure", task.getException());
+                                Log.w("DnaAnalyzer", "signInWithEmail:failure", task.getException());
                                 Toast.makeText(LoginActivity.this, "Authentication failed.",
                                         Toast.LENGTH_SHORT).show();
-                                //updateUI(null);
+
                             }
 
-                            // ...
+                            // [START_EXCLUDE]
+                            if (!task.isSuccessful()) {
+                                Toast.makeText(LoginActivity.this, "Exclusion. Authentication failed.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                            showProgress(false);
+                            // [END_EXCLUDE]
                         }
                     });
 
-            showProgress(true);
 
 
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
+
+            //mAuthTask = new UserLoginTask(email, password);
+            //mAuthTask.execute((Void) null);
 
         }
     }
@@ -397,7 +491,7 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
             }
 
             // TODO: register the new account here.
-            return true;
+            return false;
         }
 
         @Override

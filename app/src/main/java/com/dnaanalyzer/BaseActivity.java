@@ -46,6 +46,8 @@ public abstract class BaseActivity extends AppCompatActivity {
                 toast.show();
 
                 return true;
+            case R.id.options:
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
