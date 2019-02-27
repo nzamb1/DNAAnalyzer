@@ -18,7 +18,11 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".MainNavigation"></activity>
+        <activity
+            android:name=".MainNavigation"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.NoActionBar"
+            ></activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"

@@ -6,40 +6,94 @@
     android:layout_height="match_parent"
     tools:context=".MainNavigation">
 
-    <LinearLayout
-        android:layout_width="395dp"
-        android:layout_height="587dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
+    <include
+        android:id="@+id/include"
+        layout="@layout/toolbar" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="282dp"
+        android:layout_marginTop="160dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <android.support.design.button.MaterialButton
-            android:id="@+id/health_info_button"
+        <TableRow
             android:layout_width="match_parent"
-            android:layout_height="170dp"
-            android:text="Health information"
-            app:backgroundTint="#88ccbe" />
+            android:layout_height="match_parent">
 
-        <android.support.design.button.MaterialButton
-            android:id="@+id/button3"
-            android:layout_width="match_parent"
-            android:layout_height="171dp"
-            android:text="Sport and performance"
-            app:backgroundTint="#a588cc" />
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/ic_health" />
 
-        <android.support.design.button.MaterialButton
-            android:id="@+id/button4"
+            <android.support.design.button.MaterialButton
+                android:id="@+id/health_info_button"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:text="Health information"
+                app:backgroundTint="#88ccbe" />
+
+        </TableRow>
+
+        <TableRow
             android:layout_width="match_parent"
-            android:layout_height="160dp"
-            android:text="Other things that can be get from DNA"
-            app:backgroundTint="#843580" />
-    </LinearLayout>
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_fitness_image" />
+
+            <android.support.design.button.MaterialButton
+                android:id="@+id/button3"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:text="Sport and performance"
+                app:backgroundTint="#a588cc" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/ic_launcher_round" />
+
+            <android.support.design.button.MaterialButton
+                android:id="@+id/button4"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:text="Other DNA info"
+                app:backgroundTint="#843580" />
+
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imageView7"
+                android:layout_width="51dp"
+                android:layout_height="54dp"
+                app:srcCompat="@android:drawable/ic_menu_search" />
+
+            <android.support.design.button.MaterialButton
+                android:id="@+id/button5"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:text="Nucleotide search"
+                app:backgroundTint="#263650" />
+
+        </TableRow>
+
+
+    </TableLayout>
 </android.support.constraint.ConstraintLayout>
