@@ -3,6 +3,7 @@ package com.dnaanalyzer;
 import java.net.*;
 import java.io.*;
 import android.annotation.TargetApi;
+import android.content.ContentResolver;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.os.AsyncTask;
+import android.webkit.MimeTypeMap;
+import android.widget.Toast;
 
 
 public class UploadActivity extends BaseActivity {
@@ -52,29 +55,42 @@ public class UploadActivity extends BaseActivity {
             BufferedReader reader = null;
             String filepath = selectedfileuri.toString();
             String filedata = null;
+            String contenttype = null;
             StringBuilder sb = new StringBuilder();
 
+            ContentResolver cR = getApplicationContext().getContentResolver();
+            MimeTypeMap mime = MimeTypeMap.getSingleton();
+            contenttype = mime.getExtensionFromMimeType(cR.getType(selectedfileuri));
 
-            try {
-                reader = new BufferedReader(new InputStreamReader(getApplicationContext().getContentResolver().openInputStream(selectedfileuri)));
-                filedata = reader.readLine();
-                while (filedata != null) {
-                    sb.append(filedata).append("\n");
+
+            Toast.makeText(UploadActivity.this, contenttype,
+                    Toast.LENGTH_SHORT).show();
+
+            if (contenttype == "csv") {
+                try {
+                    reader = new BufferedReader(new InputStreamReader(getApplicationContext().getContentResolver().openInputStream(selectedfileuri)));
                     filedata = reader.readLine();
+                    while (filedata != null) {
+                        sb.append(filedata).append("\n");
+                        filedata = reader.readLine();
+                    }
+
+                    String fileAsString = sb.toString();
+
+                    Log.i("DnaAnalyzer", "Sending data to async thread: " + fileAsString.length());
+
+                    mTestAsync = new TestAsync();
+                    mTestAsync.execute("http://192.168.0.191:5000/develfile", "nzamb1", "secret", fileAsString);
+
+                } catch (Exception e) {
+                    Log.e("DnaAnalyzer", e.getMessage());
+
                 }
-
-            String fileAsString = sb.toString();
-
-            Log.i("DnaAnalyzer", "Sending data to async thread: " + fileAsString.length());
-
-            mTestAsync = new TestAsync();
-            mTestAsync.execute("http://192.168.0.191:5000/develfile", "nzamb1", "secret", fileAsString);
-
-            } catch (Exception e) {
-                Log.e("DnaAnalyzer",e.getMessage());
+            } else {
+                Toast.makeText(UploadActivity.this, "Only CSV files are supported",
+                Toast.LENGTH_SHORT).show();
 
             }
-
         }
 
     }
@@ -165,7 +181,7 @@ public class UploadActivity extends BaseActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             showProgress(false);
-            Intent intent = new Intent(UploadActivity.this, MainActivity.class);
+            Intent intent = new Intent(UploadActivity.this, MainNavigation.class);
             startActivity(intent);
         }
     }

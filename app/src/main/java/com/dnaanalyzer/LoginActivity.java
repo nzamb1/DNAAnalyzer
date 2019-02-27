@@ -99,15 +99,6 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
-        CharSequence text = "Hello toast!";
-        int duration = Toast.LENGTH_SHORT;
-
-
-        Toast toast = Toast.makeText(getApplicationContext(), text, duration);
-        toast.show();
-
-
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
@@ -194,7 +185,6 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
         }
     }
 
-
     /**
      * Attempts to sign in or register the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
@@ -258,9 +248,8 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
                                 // If sign in fails, display a message to the user.
                                 Log.w("DnaAnalyzer", "createUserWithEmail:failure", task.getException());
                                 Toast.makeText(LoginActivity.this, "Registration failed.",
-                                        Toast.LENGTH_SHORT).show();
-                                //updateUI(null);
-                            }
+                                Toast.LENGTH_SHORT).show();
+                                                           }
 
 
                         }

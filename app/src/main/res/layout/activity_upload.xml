@@ -6,12 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".UploadActivity">
 
+    <include
+        android:id="@+id/include"
+        layout="@layout/toolbar" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingTop="64dp"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingBottom="@dimen/activity_horizontal_margin"
+        tools:layout_editor_absoluteX="38dp"
+        tools:layout_editor_absoluteY="16dp">
 
-        <include layout="@layout/toolbar" />
 
         <TextView
             android:id="@+id/editText"
@@ -20,20 +29,25 @@
             android:clickable="false"
             android:ems="10"
             android:inputType="textPersonName"
+            android:paddingTop="@dimen/activity_horizontal_margin"
             android:text="@string/eidtText_upload"
+            android:textAlignment="center"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
             android:textColorLink="@color/colorAccent"
             android:textSize="18sp"
-            android:textStyle="bold"
-            tools:textColor="@color/colorAccent" />
+            android:textStyle="bold" />
 
-        <Button
+        <android.support.design.button.MaterialButton
             android:id="@+id/button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="true"
             android:focusable="true"
             android:onClick="buttonObClick"
-            android:text="@string/upload" />
+            android:text="@string/upload"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            app:backgroundTint="@color/design_default_color_primary" />
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -41,5 +55,11 @@
             android:layout_width="match_parent"
             android:layout_height="106dp"
             android:visibility="invisible" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/dna_molecule" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
