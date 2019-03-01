@@ -12,14 +12,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-
+import org.json.simple.JSONArray;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -29,9 +34,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
+
 public class MainActivity extends BaseActivity {
 
-
+    JSONArray Disease = new JSONArray();
     private RequestData requestData = null;
 
     @Override
@@ -46,17 +52,25 @@ public class MainActivity extends BaseActivity {
             getSupportActionBar().setTitle("Main Page");
         }
         //toolbar.setSubtitle("Test Subtitle");
-
-
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        EditText editText = (EditText)findViewById(R.id.editText2);
-        editText.setText("Google is your friend.", TextView.BufferType.NORMAL);
+        Log.d("DnaAnalyzer","Getcount1:");
+        Log.d("DnaAnalyzer",String.valueOf(Disease.size()));
+
         requestData = new RequestData();
         requestData.execute("http://192.168.0.191:5000/basiccounters", "nzamb1", "secret");
 
+
+        Log.d("DnaAnalyzer","Getcount2:");
+        Log.d("DnaAnalyzer",String.valueOf(Disease.size()));
+        ListView disease_listView = (ListView) findViewById(R.id.disease_listview);
+
+        CustomAdapter customAdapter = new CustomAdapter();
+        disease_listView.setAdapter(customAdapter);
+
     }
-    public class RequestData extends AsyncTask<String, Integer, String> {
+
+    public class RequestData extends AsyncTask<String, Integer, JSONObject> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -64,13 +78,26 @@ public class MainActivity extends BaseActivity {
 
         }
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(JSONObject result) {
             super.onPostExecute(result);
-            EditText editText = (EditText)findViewById(R.id.editText2);
-            editText.setText(result, TextView.BufferType.NORMAL);
+
+            if (result == null){
+                Toast.makeText(MainActivity.this, "Error! No connection to server.",
+                        Toast.LENGTH_LONG).show();
+            }
+            else {
+                Disease = (JSONArray) result.get("Disease");
+
+                Toast.makeText(MainActivity.this, result.toString(),
+                Toast.LENGTH_LONG).show();
+
+                ListView disease_listView = (ListView) findViewById(R.id.disease_listview);;
+                ((CustomAdapter) disease_listView.getAdapter()).notifyDataSetChanged();
+            }
+
         }
 
-        protected String doInBackground(String...params) {
+        protected JSONObject doInBackground(String...params) {
             String urlString = params[0];
             String userName =  params[1];
             String password =  params[2];
@@ -78,6 +105,7 @@ public class MainActivity extends BaseActivity {
             URL url = null;
             InputStream stream = null;
             HttpURLConnection urlConnection = null;
+            JSONObject jsonObject = null;
             try {
                 url = new URL(urlString);
                 urlConnection = (HttpURLConnection) url.openConnection();
@@ -94,25 +122,26 @@ public class MainActivity extends BaseActivity {
                 urlConnection.connect();
                 Log.i("DnaAnalyzer", "Ready to send request to server");
 
-                OutputStreamWriter wr = new OutputStreamWriter(urlConnection.getOutputStream());
+                OutputStreamWriter wr = new OutputStreamWriter(
+                        urlConnection.getOutputStream());
                 wr.write(data);
                 wr.flush();
 
                 String result = "";
 
                 stream = urlConnection.getInputStream();
-                BufferedReader httpreader = new BufferedReader(new InputStreamReader(stream, "UTF-8"), 8);
+                BufferedReader httpreader = new BufferedReader(
+                        new InputStreamReader(stream, "UTF-8"), 8);
 
 
                 JSONParser jsonParser = new JSONParser();
-                JSONObject jsonObject = (JSONObject)jsonParser.parse(
-                        new InputStreamReader(stream, "UTF-8"));
 
-                result = jsonObject.toString();
+                jsonObject = (JSONObject) jsonParser.parse(
+                        new InputStreamReader(stream, "UTF-8"));
 
                 Log.i("DnaAnalyzer", result);
 
-                return result;
+                return jsonObject;
 
             } catch (Exception e) {
                 Log.e("DnaAnalyzer",e.getMessage());
@@ -120,7 +149,43 @@ public class MainActivity extends BaseActivity {
             }
 
 
-            return "Done";
+            return jsonObject;
         }
     }
+
+    class CustomAdapter extends BaseAdapter{
+
+        @Override
+        public int getCount() {
+
+            return Disease.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup parent) {
+
+
+            view = getLayoutInflater().inflate(R.layout.diseaselistlayout,null);
+
+            //ImageView imageView = (ImageView)view.findViewById(R.id.disease_imageView);
+
+
+            TextView textview_disease = (TextView)view.findViewById(R.id.disease_textview);
+
+            textview_disease.setText(Disease.get(i).toString());
+
+            return view;
+        }
+    }
+
 }

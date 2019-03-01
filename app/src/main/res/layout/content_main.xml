@@ -8,14 +8,13 @@
     tools:context=".MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <EditText
-        android:id="@+id/editText2"
-        android:layout_width="303dp"
-        android:layout_height="173dp"
-        android:editable="false"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
-        tools:layout_editor_absoluteX="54dp"
-        tools:layout_editor_absoluteY="59dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/disease_listview"></ListView>
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

@@ -89,7 +89,7 @@
                 android:id="@+id/button5"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
-                android:text="Nucleotide search"
+                android:text="Simple Nucleotide search"
                 app:backgroundTint="#263650" />
 
         </TableRow>
