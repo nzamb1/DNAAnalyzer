@@ -1,6 +1,7 @@
 package com.dnaanalyzer;
 
 import android.content.Intent;
+import android.graphics.drawable.Icon;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -19,6 +20,10 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
+
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -37,7 +42,10 @@ import java.net.URLEncoder;
 
 public class MainActivity extends BaseActivity {
 
-    JSONArray Disease = new JSONArray();
+    JSONArray Disease    = new JSONArray();
+    JSONArray Prbability = new JSONArray();
+    JSONArray Icons      = new JSONArray();
+
     private RequestData requestData = null;
 
     @Override
@@ -49,19 +57,16 @@ public class MainActivity extends BaseActivity {
         setSupportActionBar(toolbar);
 
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Main Page");
+            getSupportActionBar().setTitle("Genetic Risk");
         }
         //toolbar.setSubtitle("Test Subtitle");
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        Log.d("DnaAnalyzer","Getcount1:");
-        Log.d("DnaAnalyzer",String.valueOf(Disease.size()));
 
         requestData = new RequestData();
         requestData.execute("http://192.168.0.191:5000/basiccounters", "nzamb1", "secret");
 
 
-        Log.d("DnaAnalyzer","Getcount2:");
+        Log.d("DnaAnalyzer","Getcount:");
         Log.d("DnaAnalyzer",String.valueOf(Disease.size()));
         ListView disease_listView = (ListView) findViewById(R.id.disease_listview);
 
@@ -86,10 +91,12 @@ public class MainActivity extends BaseActivity {
                         Toast.LENGTH_LONG).show();
             }
             else {
-                Disease = (JSONArray) result.get("Disease");
+                Disease    = (JSONArray) result.get("Disease");
+                Prbability = (JSONArray) result.get("Porbability");
+                Icons      = (JSONArray) result.get("Icons");
 
-                Toast.makeText(MainActivity.this, result.toString(),
-                Toast.LENGTH_LONG).show();
+                //Toast.makeText(MainActivity.this, result.toString(),
+                //Toast.LENGTH_LONG).show();
 
                 ListView disease_listView = (ListView) findViewById(R.id.disease_listview);;
                 ((CustomAdapter) disease_listView.getAdapter()).notifyDataSetChanged();
@@ -177,12 +184,28 @@ public class MainActivity extends BaseActivity {
 
             view = getLayoutInflater().inflate(R.layout.diseaselistlayout,null);
 
-            //ImageView imageView = (ImageView)view.findViewById(R.id.disease_imageView);
-
-
+            ImageView imageViewDisease = (ImageView)view.findViewById(R.id.disease_imageView);
+            ImageView imageViewRisk = (ImageView)view.findViewById(R.id.imageGenRisk);
             TextView textview_disease = (TextView)view.findViewById(R.id.disease_textview);
 
             textview_disease.setText(Disease.get(i).toString());
+            imageViewDisease.setImageBitmap(
+                    BitmapFactory.decodeByteArray(
+                            Base64.decode(
+                                    Icons.get(i).toString(),
+                                    Base64.DEFAULT), 0,
+                            (Base64.decode(Icons.get(i).toString(),
+                                    Base64.DEFAULT)).length));
+            //
+            if (Prbability.get(i).toString().equals("0"))
+            {
+                imageViewRisk.setImageDrawable(getResources().getDrawable(R.drawable.ic_performance_low));
+            } else if (Prbability.get(i).toString().equals("1")) {
+                imageViewRisk.setImageDrawable(getResources().getDrawable(R.drawable.ic_performance_medium));
+            } else if (Prbability.get(i).toString().equals("2")){
+                imageViewRisk.setImageDrawable(getResources().getDrawable(R.drawable.ic_performance_high));
+            }
+
 
             return view;
         }
