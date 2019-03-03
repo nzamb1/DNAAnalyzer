@@ -83,12 +83,12 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
         super.onStart();
         Intent intent = null;
         // Check if user is signed in (non-null) and update UI accordingly.
-        intent = new Intent(LoginActivity.this, MainNavigation.class);
-        startActivity(intent);
+//        intent = new Intent(LoginActivity.this, MainNavigation.class);
+//        startActivity(intent);
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
-//            intent = new Intent(LoginActivity.this, UploadActivity.class);
-//            startActivity(intent);
+            intent = new Intent(LoginActivity.this, UploadActivity.class);
+            startActivity(intent);
             Toast.makeText(LoginActivity.this, currentUser.getUid(),
                     Toast.LENGTH_SHORT).show();
         }

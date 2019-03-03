@@ -4,6 +4,8 @@ import java.net.*;
 import java.io.*;
 import android.annotation.TargetApi;
 import android.content.ContentResolver;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,6 +26,24 @@ public class UploadActivity extends BaseActivity {
     private View mProgressView;
     private TestAsync mTestAsync = null;
 
+    public static final String STORAGE_NAME = "DnaAnalyzer";
+
+    public void checkfileuploaded(){
+        //Check if file is already uploaded and send user to MainNavigationActivity
+        SharedPreferences settings = getSharedPreferences(STORAGE_NAME, MODE_PRIVATE);
+        if (settings.contains("fileuploaded")){
+            if (settings.getBoolean("fileuploaded", true)){
+                Intent intent = new Intent(UploadActivity.this, MainNavigation.class);
+                startActivity(intent);
+            }
+        }
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        checkfileuploaded();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,10 +52,11 @@ public class UploadActivity extends BaseActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         mProgressView = findViewById(R.id.progressBar);
 
-    }
+        checkfileuploaded();
+
+        }
 
 
     public void buttonObClick(View v){
@@ -181,6 +202,12 @@ public class UploadActivity extends BaseActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             showProgress(false);
+
+            SharedPreferences settings = getSharedPreferences(STORAGE_NAME, MODE_PRIVATE);
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putBoolean( "fileuploaded", true );
+            editor.commit();
+
             Intent intent = new Intent(UploadActivity.this, MainNavigation.class);
             startActivity(intent);
         }
