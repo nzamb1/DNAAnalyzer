@@ -12,7 +12,7 @@
 
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="282dp"
+        android:layout_height="353dp"
         android:layout_marginTop="160dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
@@ -75,6 +75,26 @@
                 app:backgroundTint="#843580" />
 
         </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/traits_of_character"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/ic_personality" />
+
+            <android.support.design.button.MaterialButton
+                android:id="@+id/button_traits_of_character"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:text="Traits of character"
+                app:backgroundTint="#2a92b7" />
+
+        </TableRow>
+
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">

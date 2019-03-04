@@ -1,6 +1,7 @@
 package com.dnaanalyzer;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import android.support.v7.app.AppCompatActivity;
@@ -11,8 +12,13 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public abstract class BaseActivity extends AppCompatActivity {
+
+    public static final String STORAGE_NAME = "DnaAnalyzer";
+
+
     protected final void onCreate(Bundle savedInstanceState, int layoutId)
     {
         super.onCreate(savedInstanceState);
@@ -34,18 +40,29 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent = null;
         // Handle item selection
         switch (item.getItemId()) {
+            case R.id.new_upload:
+                SharedPreferences settings = getSharedPreferences(STORAGE_NAME, MODE_PRIVATE);
+                SharedPreferences.Editor editor = settings.edit();
+                editor.putBoolean( "fileuploaded", false );
+                editor.commit();
+
+                intent = new Intent(BaseActivity.this, UploadActivity.class);
+                startActivity(intent);
+
+                return true;
             case R.id.logout:
                 //newGame();
                 FirebaseAuth.getInstance().signOut();
 
                 CharSequence text = "Successfully Logout!";
-                int duration = Toast.LENGTH_SHORT;
 
-                Toast toast = Toast.makeText(getApplicationContext(), text, duration);
+                Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);
                 toast.show();
-                Intent intent = new Intent(BaseActivity.this, LoginActivity.class);
+
+                intent = new Intent(BaseActivity.this, LoginActivity.class);
                 startActivity(intent);
 
                 return true;

@@ -52,8 +52,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
  */
 public class LoginActivity extends BaseActivity implements LoaderCallbacks<Cursor> {
 
-    // Firebase references
-    private FirebaseAuth mAuth;
+
     /**
      * Id to identity READ_CONTACTS permission request.
      */
@@ -66,10 +65,10 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
     private static final String[] DUMMY_CREDENTIALS = new String[]{
             "foo@example.com:hello", "bar@example.com:world"
     };
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     */
+
+
     private UserLoginTask mAuthTask = null;
+    public FirebaseAuth mAuth; //Firebase reference
 
     // UI references.
     private AutoCompleteTextView mEmailView;
@@ -85,12 +84,20 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
         // Check if user is signed in (non-null) and update UI accordingly.
 //        intent = new Intent(LoginActivity.this, MainNavigation.class);
 //        startActivity(intent);
+
+        /**
+         * Keep track of the login task to ensure we can cancel it if requested.
+         */
         FirebaseUser currentUser = mAuth.getCurrentUser();
+
+
         if (currentUser != null) {
+            ((DnaApplication) this.getApplication()).setUid(currentUser.getUid());
+
             intent = new Intent(LoginActivity.this, UploadActivity.class);
             startActivity(intent);
-            Toast.makeText(LoginActivity.this, currentUser.getUid(),
-                    Toast.LENGTH_SHORT).show();
+//            Toast.makeText(LoginActivity.this, currentUser.getUid(),
+//                    Toast.LENGTH_SHORT).show();
         }
         //updateUI(currentUser);
     }

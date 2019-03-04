@@ -18,5 +18,7 @@
     <string name="title_activity_main">DNA Analyzer</string>
     <string name="logout">Logout</string>
     <string name="options">Options</string>
+    <string name="NewUpload">Upload new file</string>
+
 
 </resources>

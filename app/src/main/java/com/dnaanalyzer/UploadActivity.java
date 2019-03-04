@@ -26,7 +26,7 @@ public class UploadActivity extends BaseActivity {
     private View mProgressView;
     private TestAsync mTestAsync = null;
 
-    public static final String STORAGE_NAME = "DnaAnalyzer";
+
 
     public void checkfileuploaded(){
         //Check if file is already uploaded and send user to MainNavigationActivity
@@ -84,8 +84,8 @@ public class UploadActivity extends BaseActivity {
             contenttype = mime.getExtensionFromMimeType(cR.getType(selectedfileuri));
 
 
-            Toast.makeText(UploadActivity.this, contenttype,
-                    Toast.LENGTH_SHORT).show();
+//            Toast.makeText(UploadActivity.this, contenttype,
+//                    Toast.LENGTH_SHORT).show();
 
             if (contenttype == "csv") {
                 try {
@@ -97,11 +97,12 @@ public class UploadActivity extends BaseActivity {
                     }
 
                     String fileAsString = sb.toString();
+                    String uid = ((DnaApplication) this.getApplication()).getUid();
 
                     Log.i("DnaAnalyzer", "Sending data to async thread: " + fileAsString.length());
-
+                    Log.d("DnaAnalyzer", "UID: " + uid);
                     mTestAsync = new TestAsync();
-                    mTestAsync.execute("http://192.168.0.191:5000/develfile", "nzamb1", "secret", fileAsString);
+                    mTestAsync.execute("http://192.168.0.191:5000/develfile", uid, "secret", fileAsString);
 
                 } catch (Exception e) {
                     Log.e("DnaAnalyzer", e.getMessage());
@@ -185,16 +186,24 @@ public class UploadActivity extends BaseActivity {
 
                 stream = urlConnection.getInputStream();
                 BufferedReader httpreader = new BufferedReader(new InputStreamReader(stream, "UTF-8"), 8);
+
                 result = httpreader.readLine();
 
-                return result;
+
+                if (urlConnection.getResponseCode() == 200) {
+                    return "ok";
+                } else {
+                    return "Uload failed, Return code is not 200";
+                }
+
+
 
             } catch (Exception e) {
-                Log.e("DnaAnalyzer",e.getMessage());
+                Log.e("DnaAnalyzer","Failed to upload data: " + e.getMessage());
 
             }
-
-            return "You are at PostExecute";
+            Log.e("DnaAnalyzer", "Failed to upload data");
+            return "UploadFailed";
         }
 
 
@@ -203,13 +212,25 @@ public class UploadActivity extends BaseActivity {
             super.onPostExecute(result);
             showProgress(false);
 
-            SharedPreferences settings = getSharedPreferences(STORAGE_NAME, MODE_PRIVATE);
-            SharedPreferences.Editor editor = settings.edit();
-            editor.putBoolean( "fileuploaded", true );
-            editor.commit();
+            Toast.makeText(UploadActivity.this, result,
+                    Toast.LENGTH_SHORT).show();
 
-            Intent intent = new Intent(UploadActivity.this, MainNavigation.class);
-            startActivity(intent);
+            if (result == "ok"){
+                SharedPreferences settings = getSharedPreferences(STORAGE_NAME, MODE_PRIVATE);
+                SharedPreferences.Editor editor = settings.edit();
+                editor.putBoolean( "fileuploaded", true );
+                editor.commit();
+
+                Intent intent = new Intent(UploadActivity.this, MainNavigation.class);
+                startActivity(intent);
+
+            } else {
+                Toast.makeText(UploadActivity.this, "File upload error: " + result,
+                        Toast.LENGTH_SHORT).show();
+
+            }
+
+
         }
     }
 }
