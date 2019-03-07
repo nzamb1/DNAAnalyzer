@@ -11,10 +11,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#F7F7F7"
         android:orientation="vertical">
+
         <ListView
+            android:id="@+id/disease_listview"
+            android:background="#ffffff"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/disease_listview"></ListView>
+            android:divider="#F7F7F7"
+            android:dividerHeight="10dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"></ListView>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

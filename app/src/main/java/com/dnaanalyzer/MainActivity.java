@@ -61,9 +61,12 @@ public class MainActivity extends BaseActivity {
         }
         //toolbar.setSubtitle("Test Subtitle");
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        String uid = ((DnaApplication) this.getApplication()).getUid();
+        String backendurl = ((DnaApplication) this.getApplication()).getbackendUrl();
 
         requestData = new RequestData();
-        requestData.execute("http://192.168.0.191:5000/basiccounters", "nzamb1", "secret");
+        requestData.execute(backendurl + "/basiccounters", uid, "secret");
+
 
 
         Log.d("DnaAnalyzer","Getcount:");

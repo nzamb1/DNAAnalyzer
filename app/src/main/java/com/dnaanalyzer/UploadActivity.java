@@ -98,11 +98,12 @@ public class UploadActivity extends BaseActivity {
 
                     String fileAsString = sb.toString();
                     String uid = ((DnaApplication) this.getApplication()).getUid();
+                    String backendurl = ((DnaApplication) this.getApplication()).getbackendUrl();
 
                     Log.i("DnaAnalyzer", "Sending data to async thread: " + fileAsString.length());
                     Log.d("DnaAnalyzer", "UID: " + uid);
                     mTestAsync = new TestAsync();
-                    mTestAsync.execute("http://192.168.0.191:5000/develfile", uid, "secret", fileAsString);
+                    mTestAsync.execute(backendurl + "/develfile", uid, "secret", fileAsString);
 
                 } catch (Exception e) {
                     Log.e("DnaAnalyzer", e.getMessage());
