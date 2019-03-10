@@ -1,31 +1,22 @@
 package com.dnaanalyzer;
 
 import android.content.Intent;
-import android.graphics.drawable.Icon;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.graphics.Bitmap;
+
 import android.graphics.BitmapFactory;
 import android.util.Base64;
-
-
-import com.google.firebase.auth.FirebaseAuth;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -67,14 +58,29 @@ public class MainActivity extends BaseActivity {
         requestData = new RequestData();
         requestData.execute(backendurl + "/basiccounters", uid, "secret");
 
-
-
-        Log.d("DnaAnalyzer","Getcount:");
-        Log.d("DnaAnalyzer",String.valueOf(Disease.size()));
         ListView disease_listView = (ListView) findViewById(R.id.disease_listview);
 
         CustomAdapter customAdapter = new CustomAdapter();
         disease_listView.setAdapter(customAdapter);
+
+        disease_listView.setOnItemClickListener(new OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("DnaAnalyzer", "itemClick: position = " + position + ", id = " + id);
+                TextView textView = (TextView) view.findViewById(R.id.disease_textview);
+                String text = textView.getText().toString();
+                Log.d("DnaAnalyzer", "itemClick: text = " + text );
+
+                Bundle b = new Bundle();
+                b.putString("disease",text);
+
+                Intent intent = new Intent(MainActivity.this, DiseaseDetailes.class);
+                intent.putExtras(b);
+                startActivity(intent);
+
+            }
+                                                }
+
+        );
 
     }
 

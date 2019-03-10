@@ -213,10 +213,12 @@ public class UploadActivity extends BaseActivity {
             super.onPostExecute(result);
             showProgress(false);
 
-            Toast.makeText(UploadActivity.this, result,
-                    Toast.LENGTH_SHORT).show();
+
 
             if (result == "ok"){
+                Toast.makeText(UploadActivity.this, "File uploaded and processed successfully.",
+                        Toast.LENGTH_SHORT).show();
+
                 SharedPreferences settings = getSharedPreferences(STORAGE_NAME, MODE_PRIVATE);
                 SharedPreferences.Editor editor = settings.edit();
                 editor.putBoolean( "fileuploaded", true );
