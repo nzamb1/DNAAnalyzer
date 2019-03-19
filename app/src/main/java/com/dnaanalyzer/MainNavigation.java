@@ -25,5 +25,13 @@ public class MainNavigation extends BaseActivity {
                 startActivity(intent);
             }
         });
+        Button SearchRsid = (Button) findViewById(R.id.searchrsidbutton);
+        SearchRsid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainNavigation.this, SearchActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

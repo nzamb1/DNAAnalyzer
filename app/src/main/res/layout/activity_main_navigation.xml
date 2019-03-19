@@ -106,7 +106,7 @@
                 app:srcCompat="@android:drawable/ic_menu_search" />
 
             <android.support.design.button.MaterialButton
-                android:id="@+id/button5"
+                android:id="@+id/searchrsidbutton"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
                 android:text="Simple Nucleotide search"

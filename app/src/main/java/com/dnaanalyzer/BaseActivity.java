@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import android.support.v7.app.AppCompatActivity;
+
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -36,6 +38,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
+
         return true;
     }
     @Override
@@ -67,6 +70,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
                 return true;
             case R.id.options:
+                return true;
+            case R.id.action_search:
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

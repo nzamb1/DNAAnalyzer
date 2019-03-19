@@ -178,9 +178,14 @@ public class DiseaseDetailes extends BaseActivity {
 
             TextView textview_rsid = (TextView)view.findViewById(R.id.rsIDtextView);
             TextView textview_description = (TextView)view.findViewById(R.id.descriptiontextView);
+            ImageView chromoimageView = (ImageView)view.findViewById(R.id.chromoimageView);
 
             textview_rsid.setText(Rsid.get(i).toString());
             textview_description.setText(Description.get(i).toString());
+
+            if (Mutation.get(i).toString().equals("AG")) {
+                chromoimageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_chromo_ag));
+            }
 
             return view;
         }
