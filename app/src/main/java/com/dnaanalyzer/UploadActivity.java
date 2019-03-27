@@ -1,24 +1,27 @@
 package com.dnaanalyzer;
 
-import java.net.*;
-import java.io.*;
 import android.annotation.TargetApi;
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.support.v7.app.AppCompatActivity;
-import android.content.Intent;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
-import android.os.AsyncTask;
 import android.webkit.MimeTypeMap;
 import android.widget.Toast;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 
 public class UploadActivity extends BaseActivity {
@@ -98,12 +101,11 @@ public class UploadActivity extends BaseActivity {
 
                     String fileAsString = sb.toString();
                     String uid = ((DnaApplication) this.getApplication()).getUid();
-                    String backendurl = ((DnaApplication) this.getApplication()).getbackendUrl();
 
                     Log.i("DnaAnalyzer", "Sending data to async thread: " + fileAsString.length());
                     Log.d("DnaAnalyzer", "UID: " + uid);
                     mTestAsync = new TestAsync();
-                    mTestAsync.execute(backendurl + "/develfile", uid, "secret", fileAsString);
+                    mTestAsync.execute(Constants.BACKEND_URL + "/develfile", uid, "secret", fileAsString);
 
                 } catch (Exception e) {
                     Log.e("DnaAnalyzer", e.getMessage());
@@ -186,7 +188,7 @@ public class UploadActivity extends BaseActivity {
                 String result = "";
 
                 stream = urlConnection.getInputStream();
-                BufferedReader httpreader = new BufferedReader(new InputStreamReader(stream, "UTF-8"), 8);
+                BufferedReader httpreader = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8), 8);
 
                 result = httpreader.readLine();
 

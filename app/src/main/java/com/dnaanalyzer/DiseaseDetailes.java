@@ -1,8 +1,6 @@
 package com.dnaanalyzer;
 
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -25,6 +23,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 
 public class DiseaseDetailes extends BaseActivity {
@@ -50,12 +49,11 @@ public class DiseaseDetailes extends BaseActivity {
         }
 
         String uid = ((DnaApplication) this.getApplication()).getUid();
-        String backendurl = ((DnaApplication) this.getApplication()).getbackendUrl();
 
         requestData = new RequestData();
-        requestData.execute(backendurl + "/getdiseasedetails", uid, diseasename);
+        requestData.execute(Constants.BACKEND_URL + "/getdiseasedetails", uid, diseasename);
 
-        ListView details_listView = (ListView) findViewById(R.id.details_listview);
+        ListView details_listView = findViewById(R.id.details_listview);
 
         DiseaseDetailes.DiseaseDetailsAdapter customAdapter = new DiseaseDetailsAdapter();
         details_listView.setAdapter(customAdapter);
@@ -87,7 +85,7 @@ public class DiseaseDetailes extends BaseActivity {
                 //Toast.makeText(MainActivity.this, result.toString(),
                 //Toast.LENGTH_LONG).show();
 
-                ListView details_listView = (ListView) findViewById(R.id.details_listview);;
+                ListView details_listView = findViewById(R.id.details_listview);
                 ((DiseaseDetailes.DiseaseDetailsAdapter) details_listView.getAdapter()).notifyDataSetChanged();
             }
 
@@ -130,13 +128,13 @@ public class DiseaseDetailes extends BaseActivity {
 
                 stream = urlConnection.getInputStream();
                 BufferedReader httpreader = new BufferedReader(
-                        new InputStreamReader(stream, "UTF-8"), 8);
+                        new InputStreamReader(stream, StandardCharsets.UTF_8), 8);
 
 
                 JSONParser jsonParser = new JSONParser();
 
                 jsonObject = (JSONObject) jsonParser.parse(
-                        new InputStreamReader(stream, "UTF-8"));
+                        new InputStreamReader(stream, StandardCharsets.UTF_8));
 
                 Log.i("DnaAnalyzer", result);
 
@@ -176,9 +174,9 @@ public class DiseaseDetailes extends BaseActivity {
 
             view = getLayoutInflater().inflate(R.layout.diseaseproperties,null);
 
-            TextView textview_rsid = (TextView)view.findViewById(R.id.rsIDtextView);
-            TextView textview_description = (TextView)view.findViewById(R.id.descriptiontextView);
-            ImageView chromoimageView = (ImageView)view.findViewById(R.id.chromoimageView);
+            TextView textview_rsid = view.findViewById(R.id.rsIDtextView);
+            TextView textview_description = view.findViewById(R.id.descriptiontextView);
+            ImageView chromoimageView = view.findViewById(R.id.chromoimageView);
 
             textview_rsid.setText(Rsid.get(i).toString());
             textview_description.setText(Description.get(i).toString());

@@ -1,9 +1,11 @@
 package com.dnaanalyzer;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +17,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import android.graphics.BitmapFactory;
-import android.util.Base64;
-
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.JSONArray;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -29,6 +28,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 
 public class MainActivity extends BaseActivity {
@@ -53,12 +53,11 @@ public class MainActivity extends BaseActivity {
         //toolbar.setSubtitle("Test Subtitle");
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         String uid = ((DnaApplication) this.getApplication()).getUid();
-        String backendurl = ((DnaApplication) this.getApplication()).getbackendUrl();
 
         requestData = new RequestData();
-        requestData.execute(backendurl + "/basiccounters", uid, "secret");
+        requestData.execute(Constants.BACKEND_URL + "/basiccounters", uid, "secret");
 
-        ListView disease_listView = (ListView) findViewById(R.id.disease_listview);
+        ListView disease_listView = findViewById(R.id.disease_listview);
 
         CustomAdapter customAdapter = new CustomAdapter();
         disease_listView.setAdapter(customAdapter);
@@ -66,7 +65,7 @@ public class MainActivity extends BaseActivity {
         disease_listView.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.d("DnaAnalyzer", "itemClick: position = " + position + ", id = " + id);
-                TextView textView = (TextView) view.findViewById(R.id.disease_textview);
+                TextView textView = view.findViewById(R.id.disease_textview);
                 String text = textView.getText().toString();
                 Log.d("DnaAnalyzer", "itemClick: text = " + text );
 
@@ -81,7 +80,6 @@ public class MainActivity extends BaseActivity {
                                                 }
 
         );
-
     }
 
     public class RequestData extends AsyncTask<String, Integer, JSONObject> {
@@ -107,7 +105,7 @@ public class MainActivity extends BaseActivity {
                 //Toast.makeText(MainActivity.this, result.toString(),
                 //Toast.LENGTH_LONG).show();
 
-                ListView disease_listView = (ListView) findViewById(R.id.disease_listview);;
+                ListView disease_listView = findViewById(R.id.disease_listview);
                 ((CustomAdapter) disease_listView.getAdapter()).notifyDataSetChanged();
             }
 
@@ -147,13 +145,13 @@ public class MainActivity extends BaseActivity {
 
                 stream = urlConnection.getInputStream();
                 BufferedReader httpreader = new BufferedReader(
-                        new InputStreamReader(stream, "UTF-8"), 8);
+                        new InputStreamReader(stream, StandardCharsets.UTF_8), 8);
 
 
                 JSONParser jsonParser = new JSONParser();
 
                 jsonObject = (JSONObject) jsonParser.parse(
-                        new InputStreamReader(stream, "UTF-8"));
+                        new InputStreamReader(stream, StandardCharsets.UTF_8));
 
                 Log.i("DnaAnalyzer", result);
 
@@ -193,9 +191,9 @@ public class MainActivity extends BaseActivity {
 
             view = getLayoutInflater().inflate(R.layout.diseaselistlayout,null);
 
-            ImageView imageViewDisease = (ImageView)view.findViewById(R.id.disease_imageView);
-            ImageView imageViewRisk = (ImageView)view.findViewById(R.id.imageGenRisk);
-            TextView textview_disease = (TextView)view.findViewById(R.id.disease_textview);
+            ImageView imageViewDisease = view.findViewById(R.id.disease_imageView);
+            ImageView imageViewRisk = view.findViewById(R.id.imageGenRisk);
+            TextView textview_disease = view.findViewById(R.id.disease_textview);
 
             textview_disease.setText(Disease.get(i).toString());
             imageViewDisease.setImageBitmap(
