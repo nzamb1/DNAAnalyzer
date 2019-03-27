@@ -185,6 +185,30 @@ public class DiseaseDetailes extends BaseActivity {
 
             if (Mutation.get(i).toString().equals("AG")) {
                 chromoimageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_chromo_ag));
+            } else if (Mutation.get(i).toString().equals("AA")){
+                chromoimageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_chromo_aa));
+            } else if (Mutation.get(i).toString().equals("AC")){
+                chromoimageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_chromo_ac));
+            } else if (Mutation.get(i).toString().equals("AG")){
+                chromoimageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_chromo_ag));
+            } else if (Mutation.get(i).toString().equals("AT")){
+                chromoimageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_chromo_at));
+            } else if (Mutation.get(i).toString().equals("CC")){
+                chromoimageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_chromo_cc));
+            } else if (Mutation.get(i).toString().equals("CG")){
+                chromoimageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_chromo_cg));
+            } else if (Mutation.get(i).toString().equals("GC")){
+                chromoimageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_chromo_gc));
+            } else if(Mutation.get(i).toString().equals("GG")){
+                chromoimageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_chromo_gg));
+            } else if (Mutation.get(i).toString().equals("TA")){
+                chromoimageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_chromo_ta));
+            }else if (Mutation.get(i).toString().equals("TC")){
+                chromoimageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_chromo_tc));
+            } else if (Mutation.get(i).toString().equals("TG")){
+                chromoimageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_chromo_tg));
+            } else if (Mutation.get(i).toString().equals("TT")){
+                chromoimageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_chromo_tt));
             }
 
             return view;

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/rsIDtextView"
+        android:layout_width="109dp"
+        android:layout_height="36dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="6dp"
+        android:text="rsid13223"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/chromoimageView"
+        android:layout_width="89dp"
+        android:layout_height="100dp"
+        android:layout_below="@+id/rsIDtextView"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="19dp"
+        app:srcCompat="@drawable/ic_chromo" />
+
+    <TextView
+        android:id="@+id/descriptiontextView"
+        android:layout_width="224dp"
+        android:layout_height="172dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="19dp"
+        android:layout_marginLeft="19dp"
+        android:layout_marginTop="15dp"
+        android:layout_toEndOf="@+id/rsIDtextView"
+        android:layout_toRightOf="@+id/rsIDtextView"
+        android:text="TextView"
+        android:textColor="@android:color/black" />
+</RelativeLayout>
