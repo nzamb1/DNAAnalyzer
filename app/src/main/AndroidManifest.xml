@@ -21,8 +21,7 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".SearchActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar"
-            ></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".DiseaseDetailes"
             android:label="@string/title_activity_main"
