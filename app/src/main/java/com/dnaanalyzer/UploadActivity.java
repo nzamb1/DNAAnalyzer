@@ -78,10 +78,8 @@ public class UploadActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==123 && resultCode==RESULT_OK) {
             Uri selectedfileuri = data.getData(); //The uri with the location of the file
-            BufferedReader reader = null;
             InputStream readeris = null;
 
-            String filedata = null;
             String contenttype = null;
             StringBuilder sb = new StringBuilder();
 
@@ -95,15 +93,9 @@ public class UploadActivity extends BaseActivity {
 
             if (contenttype == "csv" || contenttype == "zip") {
                 try {
-                    reader = new BufferedReader(new InputStreamReader(getApplicationContext().getContentResolver().openInputStream(selectedfileuri)));
-                    readeris = getApplicationContext().getContentResolver().openInputStream(selectedfileuri);
 
-                    filedata = reader.readLine();
+                    readeris = getApplicationContext().getContentResolver().openInputStream(selectedfileuri);
                     byte[] filedatabytes = IOUtils.toByteArray(readeris);
-                    while (filedata != null) {
-                        sb.append(filedata).append("\n");
-                        filedata = reader.readLine();
-                    }
 
                     String fileAsString = sb.toString();
                     String uid = ((DnaApplication) this.getApplication()).getUid();
