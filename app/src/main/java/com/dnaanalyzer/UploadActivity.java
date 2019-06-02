@@ -183,7 +183,6 @@ public class UploadActivity extends BaseActivity {
 
 
                 urlConnection.connect();
-                Log.i("DnaAnalyzer", "Prepared to send data to server, bytes: " + filedata.length());
 
                 OutputStreamWriter wr = new OutputStreamWriter(urlConnection.getOutputStream());
                 wr.write(data);

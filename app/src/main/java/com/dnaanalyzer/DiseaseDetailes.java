@@ -187,8 +187,6 @@ public class DiseaseDetailes extends BaseActivity {
                 chromoimageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_chromo_aa));
             } else if (Mutation.get(i).toString().equals("AC")){
                 chromoimageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_chromo_ac));
-            } else if (Mutation.get(i).toString().equals("AG")){
-                chromoimageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_chromo_ag));
             } else if (Mutation.get(i).toString().equals("AT")){
                 chromoimageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_chromo_at));
             } else if (Mutation.get(i).toString().equals("CC")){
