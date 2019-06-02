@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
@@ -22,6 +23,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import org.apache.commons.io.IOUtils;
 
 
 public class UploadActivity extends BaseActivity {
@@ -77,7 +79,8 @@ public class UploadActivity extends BaseActivity {
         if(requestCode==123 && resultCode==RESULT_OK) {
             Uri selectedfileuri = data.getData(); //The uri with the location of the file
             BufferedReader reader = null;
-            String filepath = selectedfileuri.toString();
+            InputStream readeris = null;
+
             String filedata = null;
             String contenttype = null;
             StringBuilder sb = new StringBuilder();
@@ -90,10 +93,13 @@ public class UploadActivity extends BaseActivity {
 //            Toast.makeText(UploadActivity.this, contenttype,
 //                    Toast.LENGTH_SHORT).show();
 
-            if (contenttype == "csv") {
+            if (contenttype == "csv" || contenttype == "zip") {
                 try {
                     reader = new BufferedReader(new InputStreamReader(getApplicationContext().getContentResolver().openInputStream(selectedfileuri)));
+                    readeris = getApplicationContext().getContentResolver().openInputStream(selectedfileuri);
+
                     filedata = reader.readLine();
+                    byte[] filedatabytes = IOUtils.toByteArray(readeris);
                     while (filedata != null) {
                         sb.append(filedata).append("\n");
                         filedata = reader.readLine();
@@ -105,14 +111,14 @@ public class UploadActivity extends BaseActivity {
                     Log.i("DnaAnalyzer", "Sending data to async thread: " + fileAsString.length());
                     Log.d("DnaAnalyzer", "UID: " + uid);
                     mTestAsync = new TestAsync();
-                    mTestAsync.execute(Constants.BACKEND_URL + "/develfile", uid, "secret", fileAsString);
+                    mTestAsync.execute(Constants.BACKEND_URL + "/develfile", uid, "secret", contenttype, filedatabytes);
 
                 } catch (Exception e) {
                     Log.e("DnaAnalyzer", e.getMessage());
 
                 }
             } else {
-                Toast.makeText(UploadActivity.this, "Only CSV files are supported",
+                Toast.makeText(UploadActivity.this, "Only CSV and ZIP files are supported",
                 Toast.LENGTH_SHORT).show();
 
             }
@@ -136,7 +142,7 @@ public class UploadActivity extends BaseActivity {
 
         }
     }
-    public class TestAsync extends AsyncTask<String, Integer, String>
+    public class TestAsync extends AsyncTask<Object, Integer, String>
     {
 
         @Override
@@ -146,12 +152,15 @@ public class UploadActivity extends BaseActivity {
             showProgress(true);
         }
 
-        protected String doInBackground(String...params) {
+        protected String doInBackground(Object...params) {
 
-            String urlString = params[0];
-            String userName =  params[1];
-            String password =  params[2];
-            String filedata =  params[3];
+            String urlString = (String) params[0];
+            String userName =  (String) params[1];
+            String password =  (String) params[2];
+            String filetype =  (String) params[3];
+            byte[] rawdata =  (byte[]) params[4];
+            String filedata = Base64.encodeToString(rawdata, Base64.DEFAULT);
+
             Log.i("DnaAnalyzer", "connecting to: " + urlString);
             URL url = null;
             InputStream stream = null;
@@ -173,6 +182,9 @@ public class UploadActivity extends BaseActivity {
 
                 data += "&" + URLEncoder.encode("password", "UTF-8") + "="
                         + URLEncoder.encode(password, "UTF-8");
+
+                data += "&" + URLEncoder.encode("filetype", "UTF-8") + "="
+                        + URLEncoder.encode(filetype, "UTF-8");
 
                 data += "&" + URLEncoder.encode("rawdata", "UTF-8") + "="
                         + URLEncoder.encode(filedata, "UTF-8");
