@@ -59,8 +59,6 @@ public class DiseaseDetailes extends BaseActivity {
         details_listView.setAdapter(customAdapter);
 
 
-//        TextView textView = (TextView) findViewById(R.id.diseasedetails_textView);
-//        textView.setText(diseasename);
     }
     public class RequestData extends AsyncTask<String, Integer, JSONObject> {
         @Override

@@ -67,7 +67,7 @@ public class SearchActivity extends BaseActivity {
 
     private void searchItems(String query) {
         RxUtils.dispose(disposable);
-
+        String uid = ((DnaApplication) this.getApplication()).getUid();
         disposable = DnaApplication.get(this).getApi()
                 .search(Constants.USER_NAME, query)
                 .retry()

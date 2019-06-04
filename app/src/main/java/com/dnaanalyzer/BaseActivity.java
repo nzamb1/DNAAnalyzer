@@ -52,7 +52,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
                 return true;
             case R.id.logout:
-                //newGame();
+
                 FirebaseAuth.getInstance().signOut();
 
                 CharSequence text = "Successfully Logout!";
