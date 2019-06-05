@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+
 public abstract class BaseActivity extends AppCompatActivity {
 
     public static final String STORAGE_NAME = "DnaAnalyzer";

@@ -40,11 +40,10 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
+
 
 
 /**
@@ -67,7 +66,7 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
     };
 
 
-    private UserLoginTask mAuthTask = null;
+
     public FirebaseAuth mAuth; //Firebase reference
 
     // UI references.
@@ -199,9 +198,7 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
      * errors are presented and no actual login attempt is made.
      */
     private void RegisterEmail() {
-        if (mAuthTask != null) {
-            return;
-        }
+
 
         // Reset errors.
         mEmailView.setError(null);
@@ -241,6 +238,7 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
             // perform the user login attempt.
             showProgress(true);
 
+        if(isPasswordValid(password)) {
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -256,27 +254,23 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
                                 // If sign in fails, display a message to the user.
                                 Log.w("DnaAnalyzer", "createUserWithEmail:failure", task.getException());
                                 Toast.makeText(LoginActivity.this, "Registration failed.",
-                                Toast.LENGTH_SHORT).show();
-                                                           }
+                                        Toast.LENGTH_SHORT).show();
+                            }
 
 
                         }
                     });
+        }else {
+            Toast.makeText(LoginActivity.this, "Password is to short" ,
+                    Toast.LENGTH_SHORT).show();
 
+        }
             showProgress(false);
-
-
-            //mAuthTask = new UserLoginTask(email, password);
-            //mAuthTask.execute((Void) null);
-
         }
 
     }
 
     private void attemptLogin() {
-        if (mAuthTask != null) {
-            return;
-        }
 
         // Reset errors.
         mEmailView.setError(null);
@@ -316,6 +310,7 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
             // perform the user login attempt.
             showProgress(true);
 
+        if(isPasswordValid(password)) {
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -344,6 +339,12 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
                             // [END_EXCLUDE]
                         }
                     });
+            } else {
+            showProgress(false);
+            Toast.makeText(LoginActivity.this, "Password is to short" ,
+                    Toast.LENGTH_SHORT).show();
+
+        }
 
 
 
@@ -361,7 +362,14 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
 
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
-        return password.length() > 4;
+        Log.d("DnaAnalyzer","Password validation: " + password.length());
+        if (password.length() < 4 ||
+                password.contains(" ")) {
+            return false;
+        } else {
+            return password.length() > 4;
+        }
+
     }
 
     /**
@@ -454,64 +462,6 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
         int IS_PRIMARY = 1;
     }
 
-    /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
-     */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
-        private final String mEmail;
-        private final String mPassword;
-
-        UserLoginTask(String email, String password) {
-            mEmail = email;
-            mPassword = password;
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
-
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
-
-            // TODO: register the new account here.
-            return false;
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
-            showProgress(false);
-
-            if (success) {
-                Intent intent = new Intent(LoginActivity.this, UploadActivity.class);
-                startActivity(intent);
-                //finish();
-            } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
-            }
-        }
-
-        @Override
-        protected void onCancelled() {
-            mAuthTask = null;
-            showProgress(false);
-
-        }
-    }
 }
 
