@@ -33,7 +33,7 @@
     <TextView
         android:id="@+id/descriptiontextView"
         android:layout_width="224dp"
-        android:layout_height="172dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginStart="19dp"
         android:layout_marginLeft="19dp"
@@ -41,5 +41,6 @@
         android:layout_toEndOf="@+id/rsIDtextView"
         android:layout_toRightOf="@+id/rsIDtextView"
         android:text="TextView"
-        android:textColor="@android:color/black" />
+        android:textColor="@android:color/black"
+        />
 </RelativeLayout>
