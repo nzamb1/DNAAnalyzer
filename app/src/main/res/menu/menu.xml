@@ -4,10 +4,7 @@
         android:title="@string/NewUpload"
         android:icon="@drawable/ic_favorite">
     </item>
-    <item android:id="@+id/options"
-        android:title="@string/options"
-        android:icon="@drawable/ic_favorite">
-    </item>
+
     <item android:id="@+id/logout"
         android:title="@string/logout"
         android:icon="@drawable/ic_favorite">

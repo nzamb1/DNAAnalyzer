@@ -65,8 +65,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 startActivity(intent);
 
                 return true;
-            case R.id.options:
-                return true;
+
             case R.id.action_search:
                 return true;
             default:
