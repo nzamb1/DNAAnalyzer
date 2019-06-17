@@ -211,6 +211,8 @@ public class MainActivity extends BaseActivity {
                 imageViewRisk.setImageDrawable(getResources().getDrawable(R.drawable.ic_performance_medium));
             } else if (Prbability.get(i).toString().equals("2")){
                 imageViewRisk.setImageDrawable(getResources().getDrawable(R.drawable.ic_performance_high));
+            } else if (Prbability.get(i).toString().equals("3")){
+                imageViewRisk.setImageDrawable(getResources().getDrawable(R.drawable.ic_performance_very_high));
             }
 
 
