@@ -95,8 +95,7 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
 
             intent = new Intent(LoginActivity.this, UploadActivity.class);
             startActivity(intent);
-//            Toast.makeText(LoginActivity.this, currentUser.getUid(),
-//                    Toast.LENGTH_SHORT).show();
+
         }
         //updateUI(currentUser);
     }
@@ -246,8 +245,9 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d("DnaAnalyzer", "createUserWithEmail:success");
-                                FirebaseUser user = mAuth.getCurrentUser();
+                                FirebaseUser currentUser = mAuth.getCurrentUser();
                                 //updateUI(user);
+                                ((DnaApplication) getApplication()).setUid(currentUser.getUid());
                                 Intent intent = new Intent(LoginActivity.this, UploadActivity.class);
                                 startActivity(intent);
                             } else {

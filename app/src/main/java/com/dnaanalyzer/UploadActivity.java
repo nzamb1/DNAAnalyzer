@@ -32,7 +32,6 @@ public class UploadActivity extends BaseActivity {
     private TestAsync mTestAsync = null;
 
 
-
     public void checkfileuploaded(){
         //Check if file is already uploaded and send user to MainNavigationActivity
         SharedPreferences settings = getSharedPreferences(STORAGE_NAME, MODE_PRIVATE);
@@ -87,20 +86,15 @@ public class UploadActivity extends BaseActivity {
             MimeTypeMap mime = MimeTypeMap.getSingleton();
             contenttype = mime.getExtensionFromMimeType(cR.getType(selectedfileuri));
 
-
-//            Toast.makeText(UploadActivity.this, contenttype,
-//                    Toast.LENGTH_SHORT).show();
-
             if (contenttype == "csv" || contenttype == "zip") {
                 try {
 
                     readeris = getApplicationContext().getContentResolver().openInputStream(selectedfileuri);
                     byte[] filedatabytes = IOUtils.toByteArray(readeris);
 
-                    String fileAsString = sb.toString();
                     String uid = ((DnaApplication) this.getApplication()).getUid();
 
-                    Log.i("DnaAnalyzer", "Sending data to async thread: " + fileAsString.length());
+                    Log.i("DnaAnalyzer", "Sending data to async thread: ");
                     Log.d("DnaAnalyzer", "UID: " + uid);
                     mTestAsync = new TestAsync();
                     mTestAsync.execute(Constants.BACKEND_URL + "/develfile", uid, "secret", contenttype, filedatabytes);
@@ -164,10 +158,8 @@ public class UploadActivity extends BaseActivity {
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("POST");
                 urlConnection.setDoOutput(true);
-                //Uri fileUri = Uri.parse(filepath);
 
                 Log.i("DnaAnalyzer", "Preparing data for sending");
-                Log.i("DnaAnalyzer", "Data size: " + filedata.length());
 
                 String data = URLEncoder.encode("userName", "UTF-8")
                         + "=" + URLEncoder.encode(userName, "UTF-8");
@@ -181,7 +173,7 @@ public class UploadActivity extends BaseActivity {
                 data += "&" + URLEncoder.encode("rawdata", "UTF-8") + "="
                         + URLEncoder.encode(filedata, "UTF-8");
 
-
+                Log.d("DnaAnalyzer", "Connecting to backend...");
                 urlConnection.connect();
 
                 OutputStreamWriter wr = new OutputStreamWriter(urlConnection.getOutputStream());
@@ -199,16 +191,17 @@ public class UploadActivity extends BaseActivity {
                 if (urlConnection.getResponseCode() == 200) {
                     return "ok";
                 } else {
-                    return "Uload failed, Return code is not 200";
+                    return "Upload failed, Return code is not 200";
                 }
 
 
 
             } catch (Exception e) {
-                Log.e("DnaAnalyzer","Failed to upload data: " + e.getMessage());
+                Log.e("DnaAnalyzer","1 - Failed to upload data: " + e.getMessage());
+                Log.e("DnaAnalyzer","exception", e);
 
             }
-            Log.e("DnaAnalyzer", "Failed to upload data");
+            Log.e("DnaAnalyzer", "2 - Failed to upload data");
             return "UploadFailed";
         }
 

@@ -43,63 +43,6 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/imageView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_fitness_image" />
-
-            <android.support.design.button.MaterialButton
-                android:id="@+id/button3"
-                android:layout_width="match_parent"
-                android:layout_height="64dp"
-                android:text="Sport and performance"
-                app:backgroundTint="#a588cc" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/imageView6"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                app:srcCompat="@drawable/ic_launcher_round" />
-
-            <android.support.design.button.MaterialButton
-                android:id="@+id/button4"
-                android:layout_width="match_parent"
-                android:layout_height="64dp"
-                android:text="Other DNA info"
-                app:backgroundTint="#843580" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/traits_of_character"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                app:srcCompat="@drawable/ic_personality" />
-
-            <android.support.design.button.MaterialButton
-                android:id="@+id/button_traits_of_character"
-                android:layout_width="match_parent"
-                android:layout_height="64dp"
-                android:text="Traits of character"
-                app:backgroundTint="#2a92b7" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
                 android:id="@+id/imageView7"
                 android:layout_width="51dp"
                 android:layout_height="54dp"
