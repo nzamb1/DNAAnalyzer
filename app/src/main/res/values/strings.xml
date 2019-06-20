@@ -14,7 +14,7 @@
     </string>
     <string name="upload">Select file...</string>
     <string name="button">Button</string>
-    <string name="eidtText_upload">Upload raw DNA data in CSV format</string>
+    <string name="eidtText_upload">Upload raw DNA data in CSV or ZIP format</string>
     <string name="title_activity_main">DNA Analyzer</string>
     <string name="logout">Logout</string>
     <string name="options">Options</string>
