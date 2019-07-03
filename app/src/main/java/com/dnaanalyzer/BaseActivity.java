@@ -8,9 +8,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
+import com.dnaanalyzer.util.LoginUtils;
 
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -53,17 +52,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
                 return true;
             case R.id.logout:
-
-                FirebaseAuth.getInstance().signOut();
-
-                CharSequence text = "Successfully Logout!";
-
-                Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT);
-                toast.show();
-
-                intent = new Intent(BaseActivity.this, LoginActivity.class);
-                startActivity(intent);
-
+                LoginUtils.logout(this);
                 return true;
 
             case R.id.action_search:

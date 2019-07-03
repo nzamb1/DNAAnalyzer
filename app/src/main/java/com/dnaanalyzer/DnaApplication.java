@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.dnaanalyzer.api.Api;
 import com.dnaanalyzer.provider.ApiProvider;
+import com.facebook.appevents.AppEventsLogger;
 
 public class DnaApplication extends Application {
     private String uid;
@@ -14,6 +15,7 @@ public class DnaApplication extends Application {
     public void onCreate() {
         super.onCreate();
         api = ApiProvider.provide();
+        AppEventsLogger.activateApp(this);
     }
 
     public Api getApi() {

@@ -15,6 +15,8 @@ import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
+import com.dnaanalyzer.util.AppIOUtils;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -22,8 +24,6 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import org.apache.commons.io.IOUtils;
 
 
 public class UploadActivity extends BaseActivity {
@@ -86,11 +86,11 @@ public class UploadActivity extends BaseActivity {
             MimeTypeMap mime = MimeTypeMap.getSingleton();
             contenttype = mime.getExtensionFromMimeType(cR.getType(selectedfileuri));
 
-            if (contenttype == "csv" || contenttype == "zip") {
+            if ("csv".equals(contenttype) || "zip".equals(contenttype)) {
                 try {
 
                     readeris = getApplicationContext().getContentResolver().openInputStream(selectedfileuri);
-                    byte[] filedatabytes = IOUtils.toByteArray(readeris);
+                    byte[] filedatabytes = AppIOUtils.toByteArray(readeris);
 
                     String uid = ((DnaApplication) this.getApplication()).getUid();
 
@@ -183,7 +183,7 @@ public class UploadActivity extends BaseActivity {
                 String result = "";
 
                 stream = urlConnection.getInputStream();
-                BufferedReader httpreader = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8), 8);
+                BufferedReader httpreader = new BufferedReader(new InputStreamReader(stream, "UTF-8"), 8);
 
                 result = httpreader.readLine();
 
@@ -213,7 +213,7 @@ public class UploadActivity extends BaseActivity {
 
 
 
-            if (result == "ok"){
+            if ("ok".equals(result)){
                 Toast.makeText(UploadActivity.this, "File uploaded and processed successfully.",
                         Toast.LENGTH_SHORT).show();
 

@@ -129,8 +129,8 @@ public class MainActivity extends BaseActivity {
 
                 Log.i("DnaAnalyzer", "Preparing data for sending");
 
-                String data = URLEncoder.encode("userName", "UTF-8")
-                        + "=" + URLEncoder.encode(userName, "UTF-8");
+                String data = URLEncoder.encode("userName", Constants.DEFAULT_CHARSET)
+                        + "=" + URLEncoder.encode(userName, Constants.DEFAULT_CHARSET);
 
 
                 urlConnection.connect();
@@ -145,13 +145,13 @@ public class MainActivity extends BaseActivity {
 
                 stream = urlConnection.getInputStream();
                 BufferedReader httpreader = new BufferedReader(
-                        new InputStreamReader(stream, StandardCharsets.UTF_8), 8);
+                        new InputStreamReader(stream, Constants.DEFAULT_CHARSET), 8);
 
 
                 JSONParser jsonParser = new JSONParser();
 
                 jsonObject = (JSONObject) jsonParser.parse(
-                        new InputStreamReader(stream, StandardCharsets.UTF_8));
+                        new InputStreamReader(stream, Constants.DEFAULT_CHARSET));
 
                 Log.i("DnaAnalyzer", result);
 
