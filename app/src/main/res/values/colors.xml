@@ -2,5 +2,7 @@
 <resources>
     <color name="colorPrimary">#0089FD</color>
     <color name="colorPrimaryDark">#0A2D79</color>
+    <color name="colorSignInPhone">#3bbb95</color>
+    <color name="colorSignInGoogle">#c30016</color>
     <color name="colorAccent">#D81B60</color>
 </resources>

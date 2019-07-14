@@ -126,13 +126,13 @@ public class DiseaseDetailes extends BaseActivity {
 
                 stream = urlConnection.getInputStream();
                 BufferedReader httpreader = new BufferedReader(
-                        new InputStreamReader(stream, StandardCharsets.UTF_8), 8);
+                        new InputStreamReader(stream, "UTF-8"));
 
 
                 JSONParser jsonParser = new JSONParser();
 
                 jsonObject = (JSONObject) jsonParser.parse(
-                        new InputStreamReader(stream, StandardCharsets.UTF_8));
+                        new InputStreamReader(stream, "UTF-8"));
 
                 Log.i("DnaAnalyzer", result);
 
