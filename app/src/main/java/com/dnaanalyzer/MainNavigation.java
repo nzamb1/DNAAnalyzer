@@ -25,7 +25,7 @@ public class MainNavigation extends BaseActivity {
                 startActivity(intent);
             }
         });
-        Button TraitsOfCharacter = (Button) findViewById(R.id.health_info_button);
+        Button TraitsOfCharacter = (Button) findViewById(R.id.button_traits_of_character);
         TraitsOfCharacter.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {

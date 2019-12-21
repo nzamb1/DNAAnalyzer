@@ -4,7 +4,10 @@
         android:title="@string/NewUpload"
         android:icon="@drawable/ic_favorite">
     </item>
-
+    <item android:id="@+id/delete_account"
+        android:title="@string/DeleteAccount"
+        android:icon="@drawable/ic_favorite">
+    </item>
     <item android:id="@+id/logout"
         android:title="@string/logout"
         android:icon="@drawable/ic_favorite">

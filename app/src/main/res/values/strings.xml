@@ -23,7 +23,12 @@
     <string name="title_activity_traits">DNA Analyzer Traits</string>
     <string name="logout">Logout</string>
     <string name="options">Options</string>
+    <string name="DeleteAccount">Delete account</string>
     <string name="NewUpload">Upload new file</string>
-
+    <string name="DeleteAccountYesNo">Are you sure you want to delete your account?</string>
+    <string name="Yes">Yes</string>
+    <string name="No">No</string>
+    <string name="SuccessfullyLogout">Successfully Logout!</string>
+    <string name="AccDeleted">User account deleted.</string>
 
 </resources>

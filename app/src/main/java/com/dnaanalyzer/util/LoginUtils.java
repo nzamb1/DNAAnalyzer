@@ -30,12 +30,14 @@ public class LoginUtils {
         activity.startActivity(intent);
     }
 
-    public static void logout(@NonNull Activity activity) {
+    public static void logout(@NonNull Activity activity,Boolean displayToast) {
         FirebaseAuth.getInstance().signOut();
         LoginManager.getInstance().logOut();
         LoginUtils.getGoogleSignInClient(activity).signOut();
 
-        Toast.makeText(activity, "Successfully Logout!", Toast.LENGTH_SHORT).show();
+        if (displayToast == true) {
+            Toast.makeText(activity, R.string.SuccessfullyLogout, Toast.LENGTH_SHORT).show();
+        }
 
         Intent intent = new Intent(activity, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
