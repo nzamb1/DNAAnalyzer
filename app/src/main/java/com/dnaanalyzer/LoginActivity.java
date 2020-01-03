@@ -257,7 +257,7 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                Toast.makeText(LoginActivity.this, "Registration failed.",
+                                Toast.makeText(LoginActivity.this, R.string.RegFailed,
                                         Toast.LENGTH_SHORT).show();
                             }
 
@@ -265,7 +265,7 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
                         }
                     });
         }else {
-            Toast.makeText(LoginActivity.this, "Password is to short" ,
+            Toast.makeText(LoginActivity.this, R.string.PasswordToShort ,
                     Toast.LENGTH_SHORT).show();
 
         }
@@ -342,7 +342,7 @@ public class LoginActivity extends BaseActivity implements LoaderCallbacks<Curso
                     });
             } else {
             showProgress(false);
-            Toast.makeText(LoginActivity.this, "Password is to short" ,
+            Toast.makeText(LoginActivity.this, R.string.PasswordToShort ,
                     Toast.LENGTH_SHORT).show();
 
         }

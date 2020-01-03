@@ -94,7 +94,7 @@ public class MainActivity extends BaseActivity {
             super.onPostExecute(result);
 
             if (result == null){
-                Toast.makeText(MainActivity.this, "Error! No connection to server.",
+                Toast.makeText(MainActivity.this, R.string.NoConnection,
                         Toast.LENGTH_LONG).show();
             }
             else {

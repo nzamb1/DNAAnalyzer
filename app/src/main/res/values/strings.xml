@@ -30,5 +30,8 @@
     <string name="No">No</string>
     <string name="SuccessfullyLogout">Successfully Logout!</string>
     <string name="AccDeleted">User account deleted.</string>
+    <string name="PasswordToShort">Password is to short</string>
+    <string name="RegFailed">Registration failed.</string>
+    <string name="NoConnection">Error! No connection to server.</string>
 
 </resources>
