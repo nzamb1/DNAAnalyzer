@@ -10,10 +10,7 @@ public class ApiResponse {
     private List<String> Rsid;
 
     public String toString(int index) {
-        return Rsid.get(index) + " " +
-               Chromosome.get(index) + " " +
-               Position.get(index) + " " +
-               Result.get(index);
+        return String.format("%15s\t%2s\t%10s\t%2s",Rsid.get(index),Chromosome.get(index),Position.get(index),Result.get(index));
     }
 
     public int getSize() {
