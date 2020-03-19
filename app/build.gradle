@@ -24,8 +24,8 @@ android {
         applicationId "com.dnaanalyzer"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 5
-        versionName "5.0"
+        versionCode 6
+        versionName "6.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         resValue 'string', 'facebook_app_id', getProp('facebook_app_id')
