@@ -38,6 +38,7 @@
 
         </TableRow>
 
+
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -54,6 +55,25 @@
                 android:layout_height="64dp"
                 android:text="Traits of character"
                 app:backgroundTint="#2a92b7" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/coronavirus_img"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/ic_coronavirus" />
+
+            <android.support.design.button.MaterialButton
+                android:id="@+id/button_coronavirus"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:text="Coronavirus SARS"
+                app:backgroundTint="#792E77" />
 
         </TableRow>
 

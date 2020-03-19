@@ -33,6 +33,14 @@ public class MainNavigation extends BaseActivity {
                 startActivity(intent);
             }
         });
+        Button Coronavirus = (Button) findViewById(R.id.button_coronavirus);
+        Coronavirus.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainNavigation.this, CoronavirusActivity.class);
+                startActivity(intent);
+            }
+        });
         Button SearchRsid = (Button) findViewById(R.id.searchrsidbutton);
         SearchRsid.setOnClickListener(new View.OnClickListener() {
             @Override

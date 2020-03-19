@@ -25,12 +25,19 @@
             android:label="@string/title_activity_traits"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".DiseaseDetailes"
-            android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".TraitDetailes"
             android:label="@string/title_activity_traits"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".CoronavirusActivity"
+            android:label="@string/title_activity_coronavirus"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CoronavirusDetailes"
+            android:label="@string/title_activity_coronavirus"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".DiseaseDetailes"
+            android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainNavigation"
